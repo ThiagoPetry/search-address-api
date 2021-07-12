@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, MouseEvent } from 'react';
 
 import { CgSearchFound } from 'react-icons/cg';
 import { SiCodeforces } from 'react-icons/si';
@@ -16,14 +16,14 @@ const localMapa = 'https://www.google.com/maps/embed/v1/place?'
                   + '&zoom=18'
                   + '&q=';
 
-/*interface TypeFlag {
+interface TypeFlag {
   estado: string;
-}*/
+}
 
 interface Consulta {
   bairro: string;
   cidade: string;
-  estado: string;
+  estado: TypeFlag;
   logradouro: string;
   cep: number;
   cidade_info: {
@@ -38,6 +38,7 @@ interface Consulta {
 const Consult: React.FC = () => {
   const [novaConsulta, setnovaConsulta] = useState('');
   const [consultas, setConsultas] = useState<Consulta>();
+  const [bandeira, setBandeira] = useState('');
 
   async function handleAddRepository(event: FormEvent<HTMLFormElement>,): Promise<void> {
     event.preventDefault();
@@ -47,16 +48,13 @@ const Consult: React.FC = () => {
 
     setConsultas(consulta);
     setnovaConsulta('');
-  }
-  
-  // Flag
-  /*function setFlag(flag: TypeFlag) {
+
     for(var x = 0; x < Flags.length; x++) {
-      if(flag.estado == Flags[x].uf) {
-        return <img src={Flags[x].link} />;
+      if(String(consulta?.estado) === Flags[x].uf) {
+        setBandeira(Flags[x].link);       
       }
     }
-  }*/
+  }
 
   return (
     <>
@@ -75,7 +73,7 @@ const Consult: React.FC = () => {
           <Search>
             <Zip>
               <p>CEP: {consultas?.cep}</p>
-              <RiCheckDoubleFill id="starOutline" size={35} />
+              <RiCheckDoubleFill id="starOutline" size={35} name="sad" />
             </Zip>
             <Dados>
               <BoxTop>
@@ -93,7 +91,7 @@ const Consult: React.FC = () => {
                 </div>
               </BoxBottom>
               <BoxFlag>
-                <img src="https://www.quatrocantos.com/clipart/bandeiras/bandeiras_estados_brasileiros/santa_catarina.gif" />
+                <img src={bandeira} />
                 <strong>{consultas?.estado_info.nome}</strong>
               </BoxFlag>
             </Dados>

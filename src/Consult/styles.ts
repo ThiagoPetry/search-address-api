@@ -11,17 +11,17 @@ export const Navbar = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: 1.6em;
+  font-size: 1.4em;
   color: #fff;
   max-width: 1000px;
-  padding: 16px;
+  padding: 10px;
   text-align: center;
   text-shadow: 0px 0px 5px rgb(0, 0, 0, 0.2);
 `;
 
 export const Form = styled.form`
   font-size: 1em;
-  margin-top: 40px;
+  margin-top: 30px;
 
   display: flex;
   justify-content: center;
@@ -131,7 +131,7 @@ export const Zip = styled.div`
 
 export const Dados = styled.div`
   width: 600px;
-  height: 400px;
+  height: 340px;
   
   display: flex;
   justify-content: center;
@@ -200,7 +200,7 @@ export const BoxBottom = styled.div`
 export const BoxFlag = styled.div`
   width: 100%;
   height: 140px;
-  margin-top: 25px;
+  margin-top: 5px;
   
   display: flex;
   justify-content: center;
