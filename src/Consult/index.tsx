@@ -3,13 +3,22 @@ import React, { useState, FormEvent } from 'react';
 import { CgSearchFound } from 'react-icons/cg';
 import { SiCodeforces } from 'react-icons/si';
 import { RiCheckDoubleFill } from 'react-icons/ri';
-import { FaCity } from 'react-icons/fa';
-import { FaMapMarkedAlt } from 'react-icons/fa';
+import { FaMapMarkedAlt, FaCity } from 'react-icons/fa';
 
+import { Flags } from './flags';
 import api from '../services/api';
 
-import { Title, Repositories, Navbar, Form, Dados, Container, BoxTop, BoxBottom, Zip, Info } from './styles'
-import styled from 'styled-components';
+import { Title, Repositories, Navbar, Form, Dados, Container, BoxTop, BoxBottom, Zip, Info, Search, Mapa, BoxFlag } from './styles'
+
+const localMapa = 'https://www.google.com/maps/embed/v1/place?'
+                  + 'key=AIzaSyAfiVpJZQQ8UDj47msq0JDXPRkQD9ARCi0'
+                  + '&maptype=satellite'
+                  + '&zoom=18'
+                  + '&q=';
+
+/*interface TypeFlag {
+  estado: string;
+}*/
 
 interface Consulta {
   bairro: string;
@@ -39,12 +48,15 @@ const Consult: React.FC = () => {
     setConsultas(consulta);
     setnovaConsulta('');
   }
-
-  const localMapa = 'https://www.google.com/maps/embed/v1/place?'
-                  + 'key=AIzaSyAfiVpJZQQ8UDj47msq0JDXPRkQD9ARCi0'
-                  + '&maptype=satellite'
-                  + '&zoom=18'
-                  + '&q=';
+  
+  // Flag
+  /*function setFlag(flag: TypeFlag) {
+    for(var x = 0; x < Flags.length; x++) {
+      if(flag.estado == Flags[x].uf) {
+        return <img src={Flags[x].link} />;
+      }
+    }
+  }*/
 
   return (
     <>
@@ -58,41 +70,48 @@ const Consult: React.FC = () => {
       </Form>    
 
     { consultas ?
-      <Repositories id="teste">
+      <Repositories>
         <Container>
-          <Zip>
-            <p>CEP: {consultas?.cep}</p>
-            <RiCheckDoubleFill id="arrow" size={40} />
-          </Zip>
-          <Dados>
-            <BoxTop>
-              <strong>{consultas?.estado} - {consultas?.cidade}</strong>
-              <p>{consultas?.bairro}, {consultas?.logradouro}</p>
-            </BoxTop>
-            <BoxBottom>
-              <div>
-                <FaMapMarkedAlt size={25} color="#2FAACE" />
-                <p><b>Área:</b> {consultas?.cidade_info.area_km2}</p>
-              </div>
-              <div>
-                <SiCodeforces size={25} color="#2FAACE" />
-                <p><b>IBGE:</b> {consultas?.cidade_info.codigo_ibge}</p>
-              </div>
-            </BoxBottom>
-          </Dados>
-          <Zip>
-            <p>LOCALIZAÇÃO</p>
-            <RiCheckDoubleFill id="arrow" size={40} />
-          </Zip>
-          <Dados>
-          <iframe 
-            width="700" 
-            height="450" 
-            frameBorder="0" 
-            loading="lazy" 
-            src={localMapa + consultas?.cep}>
-          </iframe>
-          </Dados>
+          <Search>
+            <Zip>
+              <p>CEP: {consultas?.cep}</p>
+              <RiCheckDoubleFill id="starOutline" size={35} />
+            </Zip>
+            <Dados>
+              <BoxTop>
+                <strong>{consultas?.estado} - {consultas?.cidade}</strong>
+                <p>{consultas?.bairro}, {consultas?.logradouro}</p>
+              </BoxTop>
+              <BoxBottom>
+                <div>
+                  <FaMapMarkedAlt size={25} color="#2FAACE" />
+                  <p><b>Área:</b> {consultas?.cidade_info.area_km2}</p>
+                </div>
+                <div>
+                  <SiCodeforces size={25} color="#2FAACE" />
+                  <p><b>IBGE:</b> {consultas?.cidade_info.codigo_ibge}</p>
+                </div>
+              </BoxBottom>
+              <BoxFlag>
+                <img src="https://www.quatrocantos.com/clipart/bandeiras/bandeiras_estados_brasileiros/santa_catarina.gif" />
+                <strong>{consultas?.estado_info.nome}</strong>
+              </BoxFlag>
+            </Dados>
+          </Search>
+          <Mapa>
+            <Zip>
+              <p>LOCALIZAÇÃO</p>
+            </Zip>
+            <Dados>
+              <iframe 
+                width="600" 
+                height="400" 
+                frameBorder="0" 
+                loading="lazy" 
+                src={localMapa + consultas?.cep}>
+              </iframe>
+            </Dados>
+          </Mapa>
         </Container>      
       </Repositories>
     :
