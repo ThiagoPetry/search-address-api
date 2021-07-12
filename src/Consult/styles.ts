@@ -53,10 +53,9 @@ export const Form = styled.form`
       background: ${shade(0.1, '#10a108')};
     }
 
-
-      &:active + #teste {
-        display: block;
-      }
+    &:active + #teste {
+      display: block;
+    }
 
   }
 `;
