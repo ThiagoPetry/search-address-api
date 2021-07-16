@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, MouseEvent } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 
 import { CgSearchFound } from 'react-icons/cg';
 import { SiCodeforces } from 'react-icons/si';
@@ -39,8 +39,41 @@ interface Consulta {
 const Consult: React.FC = () => {
   const [novaConsulta, setnovaConsulta] = useState('');
   const [inputError, setInputError] = useState('');
-  const [consultas, setConsultas] = useState<Consulta>();
-  const [bandeira, setBandeira] = useState('');
+  const [bandeira, setBandeira] = useState(() => {
+    const storageBandeira = localStorage.getItem('@Flag:bandeira');
+
+      if(storageBandeira) {
+        return JSON.parse(storageBandeira);
+      }
+
+    return '';
+
+  });
+
+  const [consultas, setConsultas] = useState<Consulta>(() => {
+    const storageRepository = localStorage.getItem('@AddressExplorer:consultas');
+
+      if(storageRepository) {
+        return JSON.parse(storageRepository);
+      }
+
+    return '';
+
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      '@AddressExplorer:consultas',
+      JSON.stringify(consultas)
+    )
+  }, [consultas]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      '@Flag:bandeira',
+      JSON.stringify(bandeira)
+    )
+  }, [bandeira]);
 
   async function handleAddRepository(event: FormEvent<HTMLFormElement>,): Promise<void> {
     event.preventDefault();
