@@ -8,7 +8,8 @@ import { FaMapMarkedAlt, FaCity } from 'react-icons/fa';
 import { Flags } from './flags';
 import api from '../services/api';
 
-import { Title, Repositories, Navbar, Form, Dados, Container, BoxTop, BoxBottom, Zip, Info, Search, Mapa, BoxFlag } from './styles'
+import { Title, Repositories, Navbar, Form, Dados, Container,
+  BoxTop, BoxBottom, Zip, Info, Search, Mapa, BoxFlag, Error } from './styles'
 
 const localMapa = 'https://www.google.com/maps/embed/v1/place?'
                   + 'key=AIzaSyAfiVpJZQQ8UDj47msq0JDXPRkQD9ARCi0'
@@ -37,22 +38,34 @@ interface Consulta {
 
 const Consult: React.FC = () => {
   const [novaConsulta, setnovaConsulta] = useState('');
+  const [inputError, setInputError] = useState('');
   const [consultas, setConsultas] = useState<Consulta>();
   const [bandeira, setBandeira] = useState('');
 
   async function handleAddRepository(event: FormEvent<HTMLFormElement>,): Promise<void> {
     event.preventDefault();
 
-    const response = await api.get<Consulta>(`${novaConsulta}`);
-    const consulta = response.data;
+    if(!novaConsulta) {
+      setInputError('Digite um CEP');
+      return;
+    }
 
-    setConsultas(consulta);
-    setnovaConsulta('');
+    try {      
+      const response = await api.get<Consulta>(`${novaConsulta}`);
+      const consulta = response.data;
 
-    for(var x = 0; x < Flags.length; x++) {
-      if(String(consulta?.estado) === Flags[x].uf) {
-        setBandeira(Flags[x].link);       
+      setConsultas(consulta);
+      setnovaConsulta('');
+      setInputError('');
+
+      for(var x = 0; x < Flags.length; x++) {
+        if(String(consulta?.estado) === Flags[x].uf) {
+          setBandeira(Flags[x].link);       
+        }
       }
+
+    } catch(err) {
+      setInputError('CEP não encontrado ou inexistente.');
     }
   }
 
@@ -62,10 +75,12 @@ const Consult: React.FC = () => {
         <Title>Buscar Endereço por CEP</Title>
       </Navbar>
 
-      <Form onSubmit={handleAddRepository}>
-          <input value={novaConsulta} onChange={e => setnovaConsulta(e.target.value)} placeholder="CEP" required/>
+      <Form hasError={!!inputError} onSubmit={handleAddRepository}>
+          <input value={novaConsulta} onChange={e => setnovaConsulta(e.target.value)} placeholder="CEP"/>
           <button type="submit" id="btn"><CgSearchFound size={30} color="#fff"/></button>
       </Form>    
+
+      {inputError && <Error>{inputError}</Error>}
 
     { consultas ?
       <Repositories>

@@ -1,5 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { shade } from 'polished';
+
+interface FormProps {
+  hasError: boolean;
+}
 
 export const Navbar = styled.div`
   width: 100%;
@@ -19,7 +23,7 @@ export const Title = styled.h1`
   text-shadow: 0px 0px 5px rgb(0, 0, 0, 0.2);
 `;
 
-export const Form = styled.form`
+export const Form = styled.form<FormProps>`
   font-size: 1em;
   margin-top: 30px;
 
@@ -35,8 +39,11 @@ export const Form = styled.form`
     border: 0;
     font-size: 1em;
     font-weight: bold;
-    border-bottom: 3px solid #8f8f8f;
     color: #8f8f8f;
+    border-bottom: 3px solid #8f8f8f;
+    ${props => props.hasError && css`
+      border-bottom: 3px solid red;
+    `}
   }
 
   button {
@@ -226,4 +233,18 @@ export const Info = styled.div`
   
   display: flex;
   justify-content: center;
+`;
+
+export const Error = styled.span`
+  display: flex;
+  justify-content: center;
+
+  margin-top: 20px;
+  margin-left: -50px;
+
+  font-weight: bold;
+  font-size: 0.5em;
+  color: red;
+
+  text-transform: uppercase;
 `;
