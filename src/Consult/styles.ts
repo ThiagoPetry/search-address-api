@@ -103,7 +103,7 @@ export const Mapa = styled.div`
 `;
 
 export const Zip = styled.div`
-  background-color: #15295c;
+  background-color: #06153c;
   border-radius: 10px 10px 0px 0px;
 
   width: 100%;
@@ -247,4 +247,28 @@ export const Error = styled.span`
   color: red;
 
   text-transform: uppercase;
+`;
+
+export const EstadoInfo = styled.span`
+  display: flex;
+  justify-content: center;
+
+  a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.6em;
+    text-transform: uppercase;
+    color: #fff;
+
+    border-radius: 10px;
+
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    background: #10a108;
+
+    &:hover {
+      background: ${shade(0.1, '#10a108')};
+    }
+  }
 `;

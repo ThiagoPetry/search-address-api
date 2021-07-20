@@ -1,4 +1,5 @@
 import React, { useState, useEffect, FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 
 import { CgSearchFound } from 'react-icons/cg';
 import { SiCodeforces } from 'react-icons/si';
@@ -9,7 +10,7 @@ import { Flags } from './flags';
 import api from '../services/api';
 
 import { Title, Repositories, Navbar, Form, Dados, Container,
-  BoxTop, BoxBottom, Zip, Info, Search, Mapa, BoxFlag, Error } from './styles'
+  BoxTop, BoxBottom, Zip, Info, Search, Mapa, BoxFlag, Error, EstadoInfo } from './styles'
 
 const localMapa = 'https://www.google.com/maps/embed/v1/place?'
                   + 'key=AIzaSyAfiVpJZQQ8UDj47msq0JDXPRkQD9ARCi0'
@@ -26,7 +27,7 @@ interface Consulta {
   cidade: string;
   estado: TypeFlag;
   logradouro: string;
-  cep: number;
+  cep: string;
   cidade_info: {
     area_km2: number;
     codigo_ibge: number;
@@ -61,6 +62,17 @@ const Consult: React.FC = () => {
 
   });
 
+  const [mapa, setMapa] = useState(() => {
+    const storageBandeira = localStorage.getItem('@Mapa:estado');
+
+      if(storageBandeira) {
+        return JSON.parse(storageBandeira);
+      }
+
+    return '';
+
+  });
+
   useEffect(() => {
     localStorage.setItem(
       '@AddressExplorer:consultas',
@@ -74,6 +86,13 @@ const Consult: React.FC = () => {
       JSON.stringify(bandeira)
     )
   }, [bandeira]);
+
+  useEffect(() => {
+    localStorage.setItem(
+      '@Mapa:estado',
+      JSON.stringify(mapa)
+    )
+  }, [mapa]);
 
   async function handleAddRepository(event: FormEvent<HTMLFormElement>,): Promise<void> {
     event.preventDefault();
@@ -93,7 +112,8 @@ const Consult: React.FC = () => {
 
       for(var x = 0; x < Flags.length; x++) {
         if(String(consulta?.estado) === Flags[x].uf) {
-          setBandeira(Flags[x].link);       
+          setBandeira(Flags[x].link); 
+          setMapa(Flags[x].mapa);        
         }
       }
 
@@ -116,12 +136,13 @@ const Consult: React.FC = () => {
       {inputError && <Error>{inputError}</Error>}
 
     { consultas ?
+    <>
       <Repositories>
         <Container>
           <Search>
             <Zip>
               <p>CEP: {consultas?.cep}</p>
-              <RiCheckDoubleFill id="starOutline" size={35} name="sad" />
+              <RiCheckDoubleFill id="starOutline" size={35} />
             </Zip>
             <Dados>
               <BoxTop>
@@ -160,6 +181,10 @@ const Consult: React.FC = () => {
           </Mapa>
         </Container>      
       </Repositories>
+      <EstadoInfo>
+        <Link key={consultas?.estado_info.nome} to={`/info/${consultas?.cep}`}>+ Informações sobre o estado</Link>
+      </EstadoInfo>
+    </>
     :
       <Info>
         <FaCity size={100} color="#8a8a8a" opacity="0.5"/>
