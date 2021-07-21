@@ -25,7 +25,7 @@ export const Title = styled.h1`
 
 export const Form = styled.form<FormProps>`
   font-size: 1em;
-  margin-top: 30px;
+  margin-top: 20px;
 
   display: flex;
   justify-content: center;
@@ -68,8 +68,8 @@ export const Form = styled.form<FormProps>`
 `;
 
 export const Repositories = styled.div`
-  margin-top: 0px;
-  margin-bottom: 60px;
+  margin-top: -10px;
+  margin-bottom: 40px;
 
   display: flex;
   justify-content: center;
@@ -143,6 +143,7 @@ export const Dados = styled.div`
   justify-content: center;
   flex-direction: column;  
 
+  background: #fff;
   box-shadow: 0px 0px 20px rgb(0, 0, 0, 0.3);
   border-radius: 0px 0px 10px 10px;
   padding: 10px;
