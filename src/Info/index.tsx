@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useRouteMatch, Link } from 'react-router-dom';
 
 import { FiChevronLeft } from 'react-icons/fi';
+import { SiCodeforces } from 'react-icons/si';
+import { FaMapMarkedAlt } from 'react-icons/fa';
 
 import api from '../services/api';
-import { Flags } from '../Consult/flags';
 
 import { Title, Navbar } from '../Consult/styles'
 
@@ -69,10 +70,12 @@ const Info: React.FC = () => {
                         </BoxTop>
                         <BoxBottom>
                             <div>
-                                <p><b>Código IBGE:</b>{novaConsulta.estado_info.codigo_ibge}</p>
+                              <FaMapMarkedAlt size={25} color="#2FAACE" />
+                              <p><b>Área:</b>{novaConsulta.estado_info.area_km2}</p>
                             </div>
                             <div>
-                                <p><b>Área KM²:</b>{novaConsulta.estado_info.area_km2}</p>
+                              <SiCodeforces size={25} color="#2FAACE" />
+                              <p><b>IBGE:</b>{novaConsulta.estado_info.codigo_ibge}</p>
                             </div>
                         </BoxBottom>
                     </Dados>
