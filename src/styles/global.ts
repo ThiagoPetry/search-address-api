@@ -42,6 +42,6 @@ export default createGlobalStyle`
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #2FAACE;
+    background: #06153c;
   }
 `;
