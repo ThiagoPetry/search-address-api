@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Header = styled.header`    
+export const Header = styled.header`   
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -8,13 +8,14 @@ export const Header = styled.header`
     margin-top: 40px;
 
     h1 {
-        margin-left: 60px;
+        margin-left: 80px;
         font-size: 3vh;
         text-transform: uppercase;
+        color: #282828;
     }
 
     a {
-        margin-right: 60px;
+        margin-right: 80px;
 
         display: flex;
         align-items: center;
@@ -37,7 +38,7 @@ export const Header = styled.header`
 
 export const RepositoryInfo = styled.div`
     width: 100%;
-    margin-top: 60px;
+    margin-top: 40px;
 
     display: flex;
     justify-content: center;
@@ -59,7 +60,7 @@ export const CardTitle = styled.div`
     background-color: #06153c;
     border-radius: 10px 10px 0px 0px;
 
-    width: 100%;
+    width: 103.8%;
 
     display: flex;
     flex-direction: row;
@@ -69,18 +70,17 @@ export const CardTitle = styled.div`
 
     h1 {
         padding: 10px;
-        font-size: 0.6em;
+        font-size: 0.7em;
         font-weight: bold;
         color: #fff;
         text-align: left;
         margin-left: 15px;
-        margin-right: 400px;
         text-shadow: 0px 0px 5px rgb(0, 0, 0, 0.2);
     }
 `;
 
 export const Dados = styled.div`
-    width: 600px;
+    width: 100%;
     height: 340px;
 
     display: flex;
@@ -95,8 +95,8 @@ export const Dados = styled.div`
     transition: all 0.4s;
 
     &:hover {
-    box-shadow: 0px 0px 60px rgb(0, 0, 0, 0.4);
-    cursor: pointer;
+        box-shadow: 0px 0px 60px rgb(0, 0, 0, 0.4);
+        cursor: pointer;
     }
 `;
 
@@ -119,15 +119,26 @@ export const BoxTop = styled.div`
 
 export const BoxBottom = styled.div`
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     margin-top: 25px;
-
+    
     div {
-        width: 260px;
         display: flex;
         justify-content: space-between;
         flex-direction: row;
         align-items: center;
+        
+        &:first-child {
+            margin-left: 80px;
+        }
+
+        &:last-child {
+            margin-right: 80px;
+        }
+
+        svg {
+            margin-right: 8px;
+        }
 
         p {
             font-size: 0.8em;
@@ -135,7 +146,8 @@ export const BoxBottom = styled.div`
             text-shadow: 0px 0px 6px rgb(0, 0, 0, 0.2);
             
             b {
-                margin-right: 10px;
+                margin-right: 8px;
+                color: #2FAACE;
             }
         }
     }
